@@ -194,7 +194,7 @@ DEPENDENCIES
   jquery-rails
   pry
   quiet_assets
-  rails (= 4.1.1)
+  rails (~> 4.1.1)
   rmagick
   rspec-rails
   sass-rails

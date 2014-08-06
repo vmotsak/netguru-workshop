@@ -1,8 +1,7 @@
 source 'https://rubygems.org'
 
-gem 'rails', '4.1.1'
+gem 'rails', '~>4.1.1'
 
-gem 'sqlite3'
 gem 'draper'
 gem 'decent_exposure'
 gem 'decent_decoration'
@@ -21,10 +20,11 @@ gem 'therubyracer', platforms: :ruby
 group :development do
   gem 'spring'
   gem 'annotate', ">=2.6.0"
-  gem 'quiet_assets', group: :development
+  gem 'quiet_assets'
 end
 
 group :development, :test do
+  gem 'sqlite3'
   gem 'rspec-rails'
   gem 'factory_girl_rails'
   gem 'shoulda-matchers'
