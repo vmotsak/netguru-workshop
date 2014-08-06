@@ -1,8 +1,8 @@
 source 'https://rubygems.org'
 
-gem 'rails', '~> 4.1.1'
+gem 'rails', '4.1.1'
 
-gem 'pg'
+gem 'sqlite3'
 gem 'draper'
 gem 'decent_exposure'
 gem 'decent_decoration'
@@ -20,6 +20,8 @@ gem 'therubyracer', platforms: :ruby
 
 group :development do
   gem 'spring'
+  gem 'annotate', ">=2.6.0"
+  gem 'quiet_assets', group: :development
 end
 
 group :development, :test do

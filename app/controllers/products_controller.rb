@@ -1,4 +1,5 @@
 class ProductsController < ApplicationController
+  before_action :authenticate_user!, only: [:new, :edit, :update, :destroy, :create]
 
   expose(:category)
   expose(:products)
@@ -16,11 +17,12 @@ class ProductsController < ApplicationController
   end
 
   def edit
+    redirect_to category_product_url(category, product), :flash => {error: "You are not allowed to edit this product."} unless current_user == product.user
   end
 
   def create
     self.product = Product.new(product_params)
-
+    self.product.user = current_user
     if product.save
       category.products << product
       redirect_to category_product_url(category, product), notice: 'Product was successfully created.'
@@ -30,6 +32,9 @@ class ProductsController < ApplicationController
   end
 
   def update
+    if self.product.user.nil? || current_user != self.product.user
+      return redirect_to category_product_url(category, product), :flash => {error: "You are not allowed to edit this product."} unless current_user == product.user
+    end
     if self.product.update(product_params)
       redirect_to category_product_url(category, product), notice: 'Product was successfully updated.'
     else
@@ -44,7 +49,11 @@ class ProductsController < ApplicationController
   end
 
   private
-    def product_params
-      params.require(:product).permit(:title, :description, :price, :category_id)
-    end
+  def product_params
+    params.require(:product).permit(:title, :description, :price, :category_id)
+  end
+
+  def check_owner
+    redirect_to category_url(category), :flash => {error: "You are not allowed to edit this product."} unless current_user == product.user
+  end
 end

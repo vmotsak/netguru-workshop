@@ -9,4 +9,24 @@
     = javascript_include_tag 'application'
 
   %body
-    = yield
+
+    .navbar.navbar-inverse{role: "navigation"}
+      .container
+        .navbar-header
+          %a.navbar-brand{href: "/"} Workshop #2
+        .collapse.navbar-collapse
+          %ul.nav.navbar-nav.navbar-right
+            - if signed_in?
+              %li.navbar-text=current_user.email
+              %li= link_to "Sign out", destroy_user_session_path, method: "delete"
+            - else
+              %li=link_to 'Sign In', new_user_session_path, method: 'get'
+
+    .container
+      %ol.breadcrumb
+        %li
+          %a{href:'/'} Home
+        = yield(:breadcrumb) if content_for?(:breadcrumb)
+      -flash.each do |name, msg|
+        =content_tag :div, msg, :class=>"alert alert-#{name}"
+      = yield
