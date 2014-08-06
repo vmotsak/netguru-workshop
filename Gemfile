@@ -39,3 +39,8 @@ gem 'jquery-rails'
 gem 'rmagick'
 gem 'carrierwave'
 gem 'simple_enum'
+
+group :production do
+  gem 'pg'
+  gem 'rails_12factor'
+end
